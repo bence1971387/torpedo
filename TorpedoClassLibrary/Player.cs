@@ -8,7 +8,7 @@ namespace TorpedoClassLibrary
 {
     class Player
     {
-        public int Score { get; }
+        public int Score { get; private set; }
         public string Name { get; }
         public Actions Actions { get; }
         public List<Ship> ShipList { get; }

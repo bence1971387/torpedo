@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace TorpedoClassLibrary
 {
-    class Tile
+    public class Tile
     {
-        int X { get; set; }
-        int Y { get; set; }
-        bool IsActive { get; set; }
-
-        public Tile(int x, int y, bool isActive)
+        public Vector2 Position { get; private set; }
+        public bool IsActive { get; set; }
+        public double Width { get; private set; }
+        public double Height { get; private set; }
+        public Tile(Vector2 position, int width, int height, bool isActive)
         {
-            X = x;
-            Y = y;
             IsActive = isActive;
+            this.Position = position;
+            Width = width;
+            Height = height;
         }
     }
 }

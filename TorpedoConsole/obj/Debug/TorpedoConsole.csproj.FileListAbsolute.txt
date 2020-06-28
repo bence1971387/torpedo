@@ -1,0 +1,10 @@
+C:\Users\User\Source\Repos\torpedo\TorpedoConsole\bin\Debug\TorpedoConsole.exe.config
+C:\Users\User\Source\Repos\torpedo\TorpedoConsole\bin\Debug\TorpedoConsole.exe
+C:\Users\User\Source\Repos\torpedo\TorpedoConsole\bin\Debug\TorpedoConsole.pdb
+C:\Users\User\Source\Repos\torpedo\TorpedoConsole\bin\Debug\TorpedoClassLibrary.dll
+C:\Users\User\Source\Repos\torpedo\TorpedoConsole\bin\Debug\TorpedoClassLibrary.pdb
+C:\Users\User\Source\Repos\torpedo\TorpedoConsole\obj\Debug\TorpedoConsole.csprojAssemblyReference.cache
+C:\Users\User\Source\Repos\torpedo\TorpedoConsole\obj\Debug\TorpedoConsole.csproj.CoreCompileInputs.cache
+C:\Users\User\Source\Repos\torpedo\TorpedoConsole\obj\Debug\TorpedoConsole.csproj.CopyComplete
+C:\Users\User\Source\Repos\torpedo\TorpedoConsole\obj\Debug\TorpedoConsole.exe
+C:\Users\User\Source\Repos\torpedo\TorpedoConsole\obj\Debug\TorpedoConsole.pdb

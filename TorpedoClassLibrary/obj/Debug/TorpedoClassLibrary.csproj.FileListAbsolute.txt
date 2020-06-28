@@ -1,0 +1,6 @@
+C:\Users\User\Source\Repos\torpedo\TorpedoClassLibrary\bin\Debug\TorpedoClassLibrary.dll
+C:\Users\User\Source\Repos\torpedo\TorpedoClassLibrary\bin\Debug\TorpedoClassLibrary.pdb
+C:\Users\User\Source\Repos\torpedo\TorpedoClassLibrary\obj\Debug\TorpedoClassLibrary.csprojAssemblyReference.cache
+C:\Users\User\Source\Repos\torpedo\TorpedoClassLibrary\obj\Debug\TorpedoClassLibrary.csproj.CoreCompileInputs.cache
+C:\Users\User\Source\Repos\torpedo\TorpedoClassLibrary\obj\Debug\TorpedoClassLibrary.dll
+C:\Users\User\Source\Repos\torpedo\TorpedoClassLibrary\obj\Debug\TorpedoClassLibrary.pdb

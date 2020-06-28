@@ -1,31 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TorpedoClassLibrary
 {
-    class Board
+    public static class Board
     {
-        public int Height { get; }
-        public int Width { get; }
-        public List<Player> PlayerList { get; private set; }
-        public Tile[,] Positions { get; private set; }
-        public void AddPlayer(Player player)
+        static bool initialized = false;
+        public static int height { get; private set; }
+        public static int width { get; private set; }
+        public static List<Player> playerList { get; private set; }
+        public static Tile[,] positions { get; private set; }
+        public static void CreateBoard(int height, int width, int tileWidth, int tileHeight, List<Player> players)
         {
-            PlayerList.Add(player);
-        }
-        public Board(int height, int width)
-        {
-            Height = height;
-            Width = width;
-            for(int i = 0; i < width; i++)
+            if (!initialized)
             {
-                for(int j = 0; j < height; j++)
+                initialized = true;
+                Board.height = height;
+                Board.width = width;
+                positions = new Tile[width,height];
+                playerList = players;
+                for (int i = 0; i < width; i++)
                 {
-                    Positions[i,j] = new Tile(i, j, true);
+                    for (int j = 0; j < height; j++)
+                    {
+                        positions[i, j] = new Tile(new Vector2(i, j), tileWidth, tileHeight, true);
+                    }
                 }
+            } 
+            else
+            {
+                throw new Exception("Board is already initialized.");
             }
         }
     }

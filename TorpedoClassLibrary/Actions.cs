@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace TorpedoClassLibrary
 {
-    class Actions
+    public class Actions
     {
-
+        delegate void CoordinateSelect(int x, int y);
+        event CoordinateSelect EventCoordinateSelect;
     }
 }

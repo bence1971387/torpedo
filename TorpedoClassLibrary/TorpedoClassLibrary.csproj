@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
@@ -44,7 +45,9 @@
   <ItemGroup>
     <Compile Include="Actions.cs" />
     <Compile Include="Board.cs" />
-    <Compile Include="Game.cs" />
+    <Compile Include="Checks.cs" />
+    <Compile Include="Factory.cs" />
+    <Compile Include="GameMode.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ship.cs" />

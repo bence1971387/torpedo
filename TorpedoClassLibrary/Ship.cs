@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -9,13 +10,12 @@ namespace TorpedoClassLibrary
 {
     public class Ship
     {
-        public enum Orientation { Up, Down, Left, Right};
+        public enum Orientation { Up, Down, Left, Right };
         public int Length { get; set; }
         public int Health { get; set; }
         public List<Tile> PositionList { get; set; }
         public event EventHandler EventShipDestroyed;
-        public event EventHandler <int>EventShipHit;
-        public event EventHandler <List<Tile>>EventCannotPlaceShip;
+        public event EventHandler<int> EventShipHit;
         public void Hit(int damage, Tile position)
         {
             EventShipHit(this, damage);
@@ -26,72 +26,52 @@ namespace TorpedoClassLibrary
                 EventShipDestroyed(this, EventArgs.Empty);
             }
         }
-        public static bool IsShipPlaceable(int length, Vector2 position, Orientation orientation)
-        {
-            if (position.X >= 0 && position.X < Board.width)
-            {
-                if (position.Y >= 0 && position.Y < Board.height)
-                {
-                    switch (orientation)
-                    {
-                        case Orientation.Up:
-                            if (((int)position.Y - length) >= 0)
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
-                        case Orientation.Down:
-                            if (((int)position.Y + length) < Board.height)
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
-                        case Orientation.Left:
-                            if (((int)position.X - length) >= 0)
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
-                        case Orientation.Right:
-                            if (((int)position.X + length) < Board.width)
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
-                    }
-                    return true;
-                }
-                else return false;
-            }
-            else return false;
-        }
+
         public Ship(int length, Vector2 position, Orientation orientation)
         {
-            this.Length = length;
-            this.Health = length;
+            Length = length;
+            Health = length;
             switch (orientation)
             {
                 case Orientation.Up:
+                    for (int i = (int)position.Y; i >= 0; i--)
+                    {
+                        PositionList.Add(
+                            new Tile(
+                                new Vector2(position.X, i),
+                                    Board.TileWidth,
+                                    Board.TileHeight, true));
+                    }
                     break;
                 case Orientation.Down:
+                    for (int i = (int)position.Y; i < Board.Height + length; i++)
+                    {
+                        PositionList.Add(
+                            new Tile(
+                                new Vector2(position.X, i),
+                                    Board.TileWidth,
+                                    Board.TileHeight, true));
+                    }
                     break;
                 case Orientation.Left:
+                    for (int i = (int)position.X; i >= 0; i--)
+                    {
+                        PositionList.Add(
+                            new Tile(
+                                new Vector2(i, position.Y),
+                                    Board.TileWidth,
+                                    Board.TileHeight, true));
+                    }
                     break;
                 case Orientation.Right:
-                    break;
-                default:
+                    for (int i = (int)position.X; i < Board.Width + length; i++)
+                    {
+                        PositionList.Add(
+                            new Tile(
+                                new Vector2(i, position.Y),
+                                    Board.TileWidth,
+                                    Board.TileHeight, true));
+                    }
                     break;
             }
         }

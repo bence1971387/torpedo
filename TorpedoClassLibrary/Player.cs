@@ -16,6 +16,7 @@ namespace TorpedoClassLibrary
         public void AddShip(Ship ship)
         {
             ShipList.Add(ship);
+            ship.EventShipHit += ShipHit;
             ship.EventShipDestroyed += ShipDestroyed;
         }
         private void AddToScore(int score)
@@ -31,6 +32,10 @@ namespace TorpedoClassLibrary
             ShipList = new List<Ship>();
             
         }
+        void ShipHit(object sender, int damage)
+        {
+            AddToScore(damage);
+        }
         void ShipDestroyed(object sender, EventArgs e)
         {
             var ship = (Ship)sender;
@@ -41,26 +46,7 @@ namespace TorpedoClassLibrary
                 ShipList.Remove(ship);
             }
         }
-        public bool AttackOnCoordinate(Vector2 position)
-        {
-            foreach (var tile in Board.positions)
-            {
-                if(tile.Position == position)
-                {
-                    foreach (var player in Board.playerList)
-                    {
-                        foreach (var ship in ShipList)
-                        {
-                            if (ship.PositionList.Contains(tile)) {
-                                ship.Hit(1, tile);
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-            return false;
-        }
+        
         //attackoncoordinate
         //  call ship.hit(damage, coordinate)
     }

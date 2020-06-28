@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
+using System.Windows.Media;
 
 namespace TorpedoClassLibrary
 {
     public class Tile
     {
+        public Brushes Color;
         public Vector2 Position { get; private set; }
         public bool IsActive { get; set; }
         public double Width { get; private set; }

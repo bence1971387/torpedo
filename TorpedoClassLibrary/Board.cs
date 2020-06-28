@@ -11,24 +11,29 @@ namespace TorpedoClassLibrary
     public static class Board
     {
         static bool initialized = false;
-        public static int height { get; private set; }
-        public static int width { get; private set; }
-        public static List<Player> playerList { get; private set; }
-        public static Tile[,] positions { get; private set; }
+        public static int Width { get; private set; }
+        public static int Height { get; private set; }
+        public static int TileWidth { get; private set; }
+        public static int TileHeight { get; private set; }
+       
+        public static List<Player> PlayerList { get; private set; }
+        public static Tile[,] Positions { get; private set; }
         public static void CreateBoard(int height, int width, int tileWidth, int tileHeight, List<Player> players)
         {
             if (!initialized)
             {
                 initialized = true;
-                Board.height = height;
-                Board.width = width;
-                positions = new Tile[width,height];
-                playerList = players;
+                Height = height;
+                Width = width;
+                TileWidth = tileWidth;
+                TileHeight = tileHeight;
+                Positions = new Tile[width,height];
+                PlayerList = players;
                 for (int i = 0; i < width; i++)
                 {
                     for (int j = 0; j < height; j++)
                     {
-                        positions[i, j] = new Tile(new Vector2(i, j), tileWidth, tileHeight, true);
+                        Positions[i, j] = new Tile(new Vector2(i, j), tileWidth, tileHeight, true);
                     }
                 }
             } 

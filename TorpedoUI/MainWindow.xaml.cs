@@ -31,10 +31,10 @@ namespace TorpedoUI
             text.Text = playerlist.Count.ToString();
             Board.CreateBoard(6, 6, 50, 50, playerlist);
             
-            if(Ship.IsShipPlaceable(3, new Vector2(0, 2), Ship.Orientation.Right))
+            if(Checks.IsShipPlaceable(3, new Vector2(0, 2), Ship.Orientation.Right))
             {
                 Ship ship = new Ship(3, new Vector2(0, 2), Ship.Orientation.Right);
-                Board.playerList[1].AddShip(ship);
+                Board.PlayerList[1].AddShip(ship);
             }
             Rectangle rect = new Rectangle
             {

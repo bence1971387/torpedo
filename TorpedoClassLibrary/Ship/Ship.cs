@@ -43,8 +43,7 @@ namespace TorpedoClassLibrary
                         PositionList.Add(
                             new Tile(
                                 new Vector2(position.X, i),
-                                    Board.TileWidth,
-                                    Board.TileHeight, true));
+                                    true));
                     }
                     break;
                 case Orientation.Down:
@@ -53,8 +52,7 @@ namespace TorpedoClassLibrary
                         PositionList.Add(
                             new Tile(
                                 new Vector2(position.X, i),
-                                    Board.TileWidth,
-                                    Board.TileHeight, true));
+                                    true));
                     }
                     break;
                 case Orientation.Left:
@@ -63,8 +61,7 @@ namespace TorpedoClassLibrary
                         PositionList.Add(
                             new Tile(
                                 new Vector2(i, position.Y),
-                                    Board.TileWidth,
-                                    Board.TileHeight, true));
+                                    true));
                     }
                     break;
                 case Orientation.Right:
@@ -73,8 +70,7 @@ namespace TorpedoClassLibrary
                         PositionList.Add(
                             new Tile(
                                 new Vector2(i, position.Y),
-                                    Board.TileWidth,
-                                    Board.TileHeight, true));
+                                    true));
                     }
                     break;
             }

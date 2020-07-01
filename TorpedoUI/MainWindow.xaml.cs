@@ -62,6 +62,11 @@ namespace TorpedoUI
             Canvas.SetTop(Tile, 0);
             GameArea.Children.Add(Tile);
         }
+        /*public  RegisterPlayer(object sender, EventArgs e)
+        {
+
+            return Factory.CreatePlayer(text.Text);
+        }*/
         public void DisplayShips()
         {
 
@@ -69,8 +74,9 @@ namespace TorpedoUI
         public MainWindow()
         {
             InitializeComponent();
-            IPlayer p1 = Factory.CreatePlayer("p1");
-            IPlayer p2 = Factory.CreatePlayer("p2");
+            //button.Click += RegisterPlayer;  
+            IPlayer p1 = Factory.CreatePlayer("p1",Player.Type.Human);
+            IPlayer p2 = Factory.CreatePlayer("p2",Player.Type.Human);
             List<IPlayer> playerList = new List<IPlayer>
             {
                 p1,
@@ -103,8 +109,8 @@ namespace TorpedoUI
             button.Click += DisplayBoard;
             GameArea.Children.Add(b);
             b.Click += DisplayBoard;
-            IPlayer p = Factory.CreatePlayer("buuu");
-            IPlayer c = Factory.CreatePlayer("baaa");
+            IPlayer p = Factory.CreatePlayer("buuu",Player.Type.Human);
+            IPlayer c = Factory.CreatePlayer("baaa",Player.Type.Human);
             p.Actions = c.Actions;
             text.Text = p.Actions.aaName();
         }

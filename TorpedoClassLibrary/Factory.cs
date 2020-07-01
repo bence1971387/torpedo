@@ -26,9 +26,9 @@ namespace TorpedoClassLibrary
         {
             return new Actions(player);
         }
-        public static IPlayer CreatePlayer(string name)
+        public static IPlayer CreatePlayer(string name, Player.Type type)
         {
-            IPlayer player = new Player(name);
+            IPlayer player = new Player(name, type);
             player.Actions = CreateActions(player);
             return player;
         }

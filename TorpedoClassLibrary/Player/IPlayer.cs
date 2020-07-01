@@ -9,6 +9,7 @@ namespace TorpedoClassLibrary
         string Name { get; }
         int Score { get; }
         IList<IShip> ShipList { get; }
+        void AddToScore(int score);
 
         void AddShip(IShip ship);
     }

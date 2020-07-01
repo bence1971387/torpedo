@@ -26,7 +26,7 @@ namespace TorpedoClassLibrary
         {
             if (!Initialized)
             {
-                //initialized = true;
+                Initialized = true;
                 Height = height;
                 Width = width;
                 TileWidth = tileWidth;
@@ -37,7 +37,7 @@ namespace TorpedoClassLibrary
                 {
                     for (int j = 0; j < height; j++)
                     {
-                        Positions[i, j] = new Tile(new Vector2(i, j), tileWidth, tileHeight, true);
+                        Positions[i, j] = new Tile(new Vector2(i, j), true);
                     }
                 }
             } 

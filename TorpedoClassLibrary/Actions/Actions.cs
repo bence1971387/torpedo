@@ -22,11 +22,11 @@ namespace TorpedoClassLibrary
         {
             return Player.Name;
         }
-        public bool AttackOnCoordinate(IPlayer attackingPlayer, Vector2 position)
+        public bool AttackOnCoordinate(ITile position)
         {
             foreach (var tile in Board.Positions)
             {
-                if (tile.Position == position)
+                if (tile == position)
                 {
                     foreach (var player in Board.PlayerList)
                     {
@@ -35,6 +35,7 @@ namespace TorpedoClassLibrary
                             if (ship.PositionList.Contains(tile))
                             {
                                 ship.Hit(1, tile);
+                                Player.AddToScore(1);
                                 return true;
                             }
                         }

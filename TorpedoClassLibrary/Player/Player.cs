@@ -9,12 +9,14 @@ namespace TorpedoClassLibrary
 {
     public class Player : IPlayer
     {
+        public enum Type { AI, Human };
         public IActions Actions { get; set; }
+        public Type PlayerType { get; private set; }
         public interface IActions
         {
             IPlayer Player { get; set; }
             string aaName();
-            bool AttackOnCoordinate(IPlayer attackingPlayer, Vector2 position);
+            bool AttackOnCoordinate(ITile position);
         }
 
         public int Score { get; private set; }
@@ -26,14 +28,14 @@ namespace TorpedoClassLibrary
             ship.EventShipHit += ShipHit;
             ship.EventShipDestroyed += ShipDestroyed;
         }
-        private void AddToScore(int score)
+        public void AddToScore(int score)
         {
             this.Score += score;
         }
 
-        internal Player(string name)
+        internal Player(string name, Type type)
         {
-
+            PlayerType = type;
             Name = name;
             Score = 0;
             ShipList = new List<IShip>();

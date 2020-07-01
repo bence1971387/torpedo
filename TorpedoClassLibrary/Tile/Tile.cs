@@ -12,15 +12,15 @@ namespace TorpedoClassLibrary
     {
         public Brushes Color;
         public Vector2 Position { get; private set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
         public double Width { get; private set; }
         public double Height { get; private set; }
-        public Tile(Vector2 position, int width, int height, bool isActive)
+        public Tile(Vector2 position, bool isActive = true)
         {
             IsActive = isActive;
             Position = position;
-            Width = width;
-            Height = height;
+            Width = Board.TileWidth;
+            Height = Board.TileHeight;
         }
     }
 }

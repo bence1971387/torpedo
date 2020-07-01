@@ -10,24 +10,28 @@ namespace TorpedoClassLibrary
 {
     public static class Board
     {
-        static bool initialized = false;
+        public static bool Initialized { get; private set; } = false;
         public static int Width { get; private set; }
         public static int Height { get; private set; }
         public static int TileWidth { get; private set; }
         public static int TileHeight { get; private set; }
        
-        public static List<Player> PlayerList { get; private set; }
-        public static Tile[,] Positions { get; private set; }
-        public static void CreateBoard(int height, int width, int tileWidth, int tileHeight, List<Player> players)
+        public static IList<IPlayer> PlayerList { get; private set; }
+        public static ITile[,] Positions { get; private set; }
+        static Board()
         {
-            if (!initialized)
+
+        }
+        public static void CreateBoard(int height, int width, int tileWidth, int tileHeight, IList<IPlayer> players)
+        {
+            if (!Initialized)
             {
-                initialized = true;
+                //initialized = true;
                 Height = height;
                 Width = width;
                 TileWidth = tileWidth;
                 TileHeight = tileHeight;
-                Positions = new Tile[width,height];
+                Positions = new ITile[width,height];
                 PlayerList = players;
                 for (int i = 0; i < width; i++)
                 {

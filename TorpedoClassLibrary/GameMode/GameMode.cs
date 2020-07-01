@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace TorpedoClassLibrary
 {
-    public sealed class GameMode
+    internal sealed class GameMode : IGameMode
     {
         public void Asd()
         {
-            Ship ship = new Ship(4, new Vector2(1,1), Ship.Orientation.Down);
+            //Ship ship = new Ship(4, new Vector2(1,1), Ship.Orientation.Down);
             //gamemode interface
         }
     }

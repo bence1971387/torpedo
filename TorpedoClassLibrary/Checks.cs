@@ -11,7 +11,7 @@ namespace TorpedoClassLibrary
     {
         public static bool IsShipPlaceable(int length, Vector2 position, Ship.Orientation orientation)
         {
-            if (position.X >= 0 && position.X < Board.Width)
+            if (Board.Initialized && position.X >= 0 && position.X < Board.Width)
             {
                 if (position.Y >= 0 && position.Y < Board.Height)
                 {

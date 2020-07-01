@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TorpedoUI
+namespace TorpedoClassLibrary
 {
-    class Display
+    public interface IAI
     {
     }
 }

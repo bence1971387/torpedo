@@ -14,28 +14,70 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Numerics;
 using TorpedoClassLibrary;
+using System.ComponentModel;
 
 namespace TorpedoUI 
 {
-    public partial class MainWindow : Window 
+    public partial class MainWindow : Window
     {
+        public void DisplayBoard(object sender, EventArgs e)
+        {
+            //GameArea.Width = Board.Width * Board.TileWidth;
+            //GameArea.Height = Board.Height * Board.TileHeight;
+            /*text.Text = "bambam";
+            for (int i = 0; i < Board.Height; i++)
+            {
+                for (int j = 0; j < Board.Width; j++)
+                {
+                    Rectangle Tile = new Rectangle
+                    {
+                        Stroke = Brushes.Black,
+                        StrokeThickness = 2,
+                        Width = Board.TileWidth,
+                        Height = Board.TileHeight
+                    };
+                    Canvas.SetLeft(Tile,Board.TileWidth*j);
+                    GameArea.Children.Add(Tile);
+                }
+                Rectangle Tile2 = new Rectangle
+                {
+                    Stroke = Brushes.Black,
+                    StrokeThickness = 2,
+                    Width = Board.TileWidth,
+                    Height = Board.TileHeight
+                };
+                Canvas.SetTop(Tile2,Board.TileHeight*i);
+                GameArea.Children.Add(Tile2);
+            }*/
+            Rectangle Tile = new Rectangle
+            {
+                Stroke = Brushes.Black,
+                StrokeThickness = 2,
+                Width = Board.TileWidth,
+                Height = Board.TileHeight,
+                Fill = Brushes.AliceBlue
+            };
+            GameArea.Children.Remove(button);
+            Canvas.SetLeft(Tile, 0);
+            Canvas.SetTop(Tile, 0);
+            GameArea.Children.Add(Tile);
+        }
+        public void DisplayShips()
+        {
+
+        }
         public MainWindow()
         {
             InitializeComponent();
-            Player player1 = new Player("p1", new Actions());
-            Player player2 = new Player("p2", new Actions());
-            List<Player> playerlist = new List<Player>();
-            playerlist.Add(player1);
-            playerlist.Add(player2);
-            playerlist.Remove(new Player("p1", new Actions()));
-            text.Text = playerlist.Count.ToString();
-            Board.CreateBoard(6, 6, 50, 50, playerlist);
-            
-            if(Checks.IsShipPlaceable(3, new Vector2(0, 2), Ship.Orientation.Right))
+            IPlayer p1 = Factory.CreatePlayer("p1");
+            IPlayer p2 = Factory.CreatePlayer("p2");
+            List<IPlayer> playerList = new List<IPlayer>
             {
-                Ship ship = new Ship(3, new Vector2(0, 2), Ship.Orientation.Right);
-                Board.PlayerList[1].AddShip(ship);
-            }
+                p1,
+                p2
+            };
+            Board.CreateBoard(10, 10, 50, 50,playerList);
+            Factory.CreateShip(3, new Vector2(1, 1), Ship.Orientation.Down);
             Rectangle rect = new Rectangle
             {
                 Stroke = Brushes.Black,
@@ -51,7 +93,20 @@ namespace TorpedoUI
                 Width = 50,
                 Height = 60,
             };
-            GameArea.Children.Add(rect2);
+            
+            Button b = new Button
+            {
+                Name = "asd",
+                Width = 20,
+                Height = 20,
+            };
+            button.Click += DisplayBoard;
+            GameArea.Children.Add(b);
+            b.Click += DisplayBoard;
+            IPlayer p = Factory.CreatePlayer("buuu");
+            IPlayer c = Factory.CreatePlayer("baaa");
+            p.Actions = c.Actions;
+            text.Text = p.Actions.aaName();
         }
     }
 }

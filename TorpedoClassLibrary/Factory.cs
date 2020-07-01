@@ -8,27 +8,29 @@ using System.Threading.Tasks;
 
 namespace TorpedoClassLibrary
 {
-    class Factory
+    public static class Factory
     {
-        public Ship CreateShip(int length, Vector2 position, Ship.Orientation orientation)
+        public static IShip CreateShip(int length, Vector2 position, Ship.Orientation orientation)
         {
             if (Checks.IsShipPlaceable(length, position, orientation))
             {
-                Ship ship = new Ship(length, position, orientation);
+                IShip ship = new Ship(length, position, orientation);
                 return ship;
             }
             else
             {
-                throw new Exception("Ship parameters are invalid, or not fitting into the current context.");
+                return null;
             }
         }
-        private Actions CreateActions()
+        private static Player.IActions CreateActions(IPlayer player)
         {
-            return new Actions();
+            return new Actions(player);
         }
-        public Player CreatePlayer(string name)
+        public static IPlayer CreatePlayer(string name)
         {
-            return new Player(name, CreateActions());
+            IPlayer player = new Player(name);
+            player.Actions = CreateActions(player);
+            return player;
         }
     }
 }

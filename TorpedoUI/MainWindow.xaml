@@ -8,7 +8,9 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <TextBox x:Name="text" HorizontalAlignment="Left" Height="23" Margin="344,131,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <Canvas x:Name="GameArea"/>
+        <Canvas x:Name="GameArea">
+            <Button Name="button" Content="Button" Canvas.Left="358" Canvas.Top="238" Width="74"/>
+        </Canvas>
 
     </Grid>
 </Window>

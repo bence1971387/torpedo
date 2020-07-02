@@ -20,7 +20,7 @@ namespace TorpedoUI
 {
     public partial class MainWindow : Window
     {
-        public void DisplayBoard()
+        public void DisplayBoard(IPlayer player)
         {
             GameArea.Width = Board.Width * Board.TileWidth;
             GameArea.Height = Board.Height * Board.TileHeight;
@@ -35,35 +35,6 @@ namespace TorpedoUI
                 }
             }
         }
-        /*public void DisplayShips(IPlayer player)
-        {
-            foreach (var ship in player.ShipList)
-            {
-                foreach (var tile in ship.PositionList)
-                {
-                    Canvas.SetLeft(tile.Display, tile.Position.X * Board.TileWidth);
-                    Canvas.SetTop(tile.Display, tile.Position.Y * Board.TileHeight);
-                    GameArea.Children.Add(tile.Display);
-                }
-            }
-        }*/
-        /*public void DisplayAttack(object sender, ITile tile)
-        {
-            
-            Canvas.SetLeft(display, tile.Position.X*Board.TileWidth);
-            Canvas.SetTop(display, tile.Position.Y*Board.TileHeight);
-            GameArea.Children.Add(display);
-        }*/
-        /*public void InitializeShips()
-        {
-            foreach (var playerArea in Board.PlayerAreaList)
-            {
-                foreach (var ship in playerArea.Player.ShipList)
-                {
-                    ship.EventShipHit += DisplayAttack;
-                }
-            }
-        }*/
         public MainWindow()
         {
             InitializeComponent();
@@ -81,7 +52,7 @@ namespace TorpedoUI
             //DisplayBoard();
             //player2.Actions.AttackOnCoordinate(Board.Positions[5, 4]);
             //player2.Actions.AttackOnCoordinate(Board.Positions[6, 3]);
-            DisplayBoard();
+            DisplayBoard(player);
         }
 
         private void GameArea_MouseDown(object sender, MouseButtonEventArgs e)
@@ -90,7 +61,16 @@ namespace TorpedoUI
             int xNormalized = (int)((point.X / Board.TileWidth));
             int yNormalized = (int)((point.Y / Board.TileHeight));
             Board.PlayerList[1].Actions.AttackOnCoordinate(Board.Positions[xNormalized,yNormalized]);
-            DisplayBoard();
+            DisplayBoard(Board.PlayerList[0]);
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(Keyboard.IsKeyDown(Key.S) && Keyboard.IsKeyDown(Key.LeftCtrl))
+            {
+                Board.PlayerList[1].Actions.AttackOnCoordinate(Board.Positions[1, 3]);
+                DisplayBoard(Board.PlayerList[0]);
+            }
         }
     }
 }

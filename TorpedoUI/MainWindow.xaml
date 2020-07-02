@@ -5,14 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TorpedoUI"
         mc:Ignorable="d"
-        Title="MainWindow" SizeToContent="WidthAndHeight">
+        Title="MainWindow" SizeToContent="WidthAndHeight" KeyDown="Window_KeyDown">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock Width="10" Text="asdasdasd" Height="10" Grid.Row="1"></TextBlock>
-        <Canvas Grid.Row="2" x:Name="GameArea" MouseDown="GameArea_MouseDown">
+        <Canvas Grid.Row="1" x:Name="GameArea" MouseDown="GameArea_MouseDown">
         </Canvas>
     </Grid>
 </Window>

@@ -64,6 +64,7 @@ namespace TorpedoClassLibrary
                 case Orientation.Up:
                     for (int i = (int)tile.Position.Y; i > ((int)tile.Position.Y - length); i--)
                     {
+                        
                         Board.Positions[(int)tile.Position.X, i].Display = DisplayShip();
                         PositionList.Add(Board.Positions[(int)tile.Position.X, i]);
                     }

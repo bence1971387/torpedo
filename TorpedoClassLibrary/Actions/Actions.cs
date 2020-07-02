@@ -5,6 +5,8 @@ using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace TorpedoClassLibrary
 {
@@ -38,7 +40,16 @@ namespace TorpedoClassLibrary
                     }
                 }
             }*/
-            foreach(var playerArea in Board.PlayerAreaList)
+            Rectangle displayAttack = new Rectangle
+            {
+                Stroke = Brushes.Black,
+                Fill = Brushes.LightBlue,
+                StrokeThickness = 2,
+                Width = Board.TileWidth,
+                Height = Board.TileHeight
+            };
+            attackedTile.Display = displayAttack;
+            foreach (var playerArea in Board.PlayerAreaList)
             {
                 if(playerArea.Player != Player)
                 {
@@ -55,7 +66,7 @@ namespace TorpedoClassLibrary
                                     return true;
                                 }
                             }
-                            //return true;
+                            return true;
                         }
                     }
                 }

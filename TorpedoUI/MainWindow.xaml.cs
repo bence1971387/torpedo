@@ -24,6 +24,7 @@ namespace TorpedoUI
         {
             GameArea.Width = Board.Width * Board.TileWidth;
             GameArea.Height = Board.Height * Board.TileHeight;
+            GameArea.Children.Clear();
             for(int i = 0; i < Board.Width; i++)
             {
                 for (int j = 0; j < Board.Height; j++)
@@ -67,50 +68,29 @@ namespace TorpedoUI
         {
             InitializeComponent();
             Board.CreateBoard(20, 10, 50, 50, Brushes.Black, Brushes.White);
-            Rectangle displayDamage = new Rectangle
-            {
-                Stroke = Brushes.Black,
-                Fill = Brushes.Red,
-                StrokeThickness = 2,
-                Width = Board.TileWidth,
-                Height = Board.TileHeight
-            };
-            Board.Positions[1, 1].Display = displayDamage;
             IPlayer player = Factory.CreatePlayer("PlayerOne", Player.Type.Human);
             IPlayer player2 = Factory.CreatePlayer("PlayerTwo", Player.Type.AI);
             Board.AddPlayer(player);
             Board.AddPlayer(player2);
             Factory.GeneratePlayerAreaList();
-            Factory.CreateShip(player, 3, Board.Positions[0, 0], Ship.Orientation.Down);
+            Factory.CreateShip(player, 6, Board.Positions[0, 0], Ship.Orientation.Down);
             if(Factory.CreateShip(player, 5, Board.Positions[5, 3], Ship.Orientation.Right))
             {
                 
             }
-            player2.Actions.AttackOnCoordinate(Board.Positions[5, 3]);
-            DisplayBoard();
-            //InitializeShips();
-
-
-
-
             //DisplayBoard();
-            /*Board.CreateBoard(10, 10, 50, 50);
-            IPlayer p1 = Factory.CreatePlayer("p1", Player.Type.Human);
-            IPlayer p2 = Factory.CreatePlayer("p2", Player.Type.AI);
-            IShip ship = Factory.CreateShip(3, Board.Positions[0, 0], Ship.Orientation.Down);
-            
-            Board.AddPlayer(p1);
-            Board.AddPlayer(p2);
-            Factory.GeneratePlayerAreaList();
-            p1.AddShip(ship);
-            if (p2.Actions.AttackOnCoordinate(Board.Positions[0, 1]))
-            {
-                //text.Text = "success";
-            } 
-            else
-            {
-                //text.Text = "Failure";
-            }*/
+            //player2.Actions.AttackOnCoordinate(Board.Positions[5, 4]);
+            //player2.Actions.AttackOnCoordinate(Board.Positions[6, 3]);
+            DisplayBoard();
+        }
+
+        private void GameArea_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Point point = e.GetPosition(GameArea);
+            int xNormalized = (int)((point.X / Board.TileWidth));
+            int yNormalized = (int)((point.Y / Board.TileHeight));
+            Board.PlayerList[1].Actions.AttackOnCoordinate(Board.Positions[xNormalized,yNormalized]);
+            DisplayBoard();
         }
     }
 }

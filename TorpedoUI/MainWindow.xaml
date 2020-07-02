@@ -7,7 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" SizeToContent="WidthAndHeight">
     <Grid>
-        <Canvas x:Name="GameArea">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Width="10" Text="asdasdasd" Height="10" Grid.Row="1"></TextBlock>
+        <Canvas Grid.Row="2" x:Name="GameArea" MouseDown="GameArea_MouseDown">
         </Canvas>
     </Grid>
 </Window>

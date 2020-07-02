@@ -3,6 +3,6 @@
     public interface IActions
     {
         IPlayer Player { get; set; }
-        bool AttackOnCoordinate(ITile position);
+        bool AttackOnCoordinate(ITile attackedTile);
     }
 }

@@ -22,10 +22,9 @@ namespace TorpedoUI
     {
         public void DisplayBoard(object sender, EventArgs e)
         {
-            //GameArea.Width = Board.Width * Board.TileWidth;
-            //GameArea.Height = Board.Height * Board.TileHeight;
-            /*text.Text = "bambam";
-            for (int i = 0; i < Board.Height; i++)
+            GameArea.Width = Board.Width * Board.TileWidth;
+            GameArea.Height = Board.Height * Board.TileHeight;
+            /*for (int i = 0; i < Board.Height; i++)
             {
                 for (int j = 0; j < Board.Width; j++)
                 {
@@ -79,14 +78,14 @@ namespace TorpedoUI
             Board.CreateBoard(10, 10, 50, 50);
             IPlayer p1 = Factory.CreatePlayer("p1", Player.Type.Human);
             IPlayer p2 = Factory.CreatePlayer("p2", Player.Type.AI);
-            IShip ship = Factory.CreateShip(3, Board.Positions[9, 0], Ship.Orientation.Down);
+            IShip ship = Factory.CreateShip(3, Board.Positions[0, 0], Ship.Orientation.Down);
             text.Text = ship.PositionList[2].Position.X.ToString();
             
             Board.AddPlayer(p1);
             Board.AddPlayer(p2);
             Factory.GeneratePlayerAreaList();
             p1.AddShip(ship);
-            if (p2.Actions.AttackOnCoordinate(Board.Positions[9, 1]))
+            if (p2.Actions.AttackOnCoordinate(Board.Positions[0, 1]))
             {
                 text.Text = "success";
             } 

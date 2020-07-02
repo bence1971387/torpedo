@@ -9,7 +9,7 @@ namespace TorpedoClassLibrary
 {
     public class AI : IAI
     {
-        public Tile Attack()
+        public ITile Attack()
         {
             Tile tile = new Tile(new Vector2(1, 1), true);
             Board.PlayerList[0].Actions.AttackOnCoordinate(Board.Positions[1,1]);

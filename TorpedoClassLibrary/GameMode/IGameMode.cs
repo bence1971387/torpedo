@@ -1,7 +1,9 @@
-﻿namespace TorpedoClassLibrary
+﻿using System.Collections.Generic;
+
+namespace TorpedoClassLibrary
 {
     public interface IGameMode
     {
-        void Asd();
+        //IList<IBoard> BoardList { get; }
     }
 }

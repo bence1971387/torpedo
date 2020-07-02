@@ -12,16 +12,9 @@ namespace TorpedoClassLibrary
         public enum Type { AI, Human };
         public IActions Actions { get; set; }
         public Type PlayerType { get; private set; }
-        public interface IActions
-        {
-            IPlayer Player { get; set; }
-            string aaName();
-            bool AttackOnCoordinate(ITile position);
-        }
-
         public int Score { get; private set; }
-        public string Name { get; }
-        public IList<IShip> ShipList { get; }
+        public string Name { get; private set; }
+        public IList<IShip> ShipList { get; private set; }
         public void AddShip(IShip ship)
         {
             ShipList.Add(ship);
@@ -31,15 +24,6 @@ namespace TorpedoClassLibrary
         public void AddToScore(int score)
         {
             this.Score += score;
-        }
-
-        internal Player(string name, Type type)
-        {
-            PlayerType = type;
-            Name = name;
-            Score = 0;
-            ShipList = new List<IShip>();
-
         }
         void ShipHit(object sender, int damage)
         {
@@ -55,7 +39,18 @@ namespace TorpedoClassLibrary
                 ShipList.Remove(ship);
             }
         }
+        internal Player(string name, Type type)
+        {
+            PlayerType = type;
+            Name = name;
+            Score = 0;
+            ShipList = new List<IShip>();
+            /*for (int i = 0; i < length; i++)
+            {
 
+            }*/
+
+        }
         //attackoncoordinate
         //  call ship.hit(damage, coordinate)
     }

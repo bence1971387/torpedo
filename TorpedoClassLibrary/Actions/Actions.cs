@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TorpedoClassLibrary
 {
-    internal class Actions : Player.IActions
+    public class Actions : IActions
     {
         public IPlayer Player { get; set; }
 
@@ -18,13 +18,9 @@ namespace TorpedoClassLibrary
         {
             Player = player;
         }
-        public string aaName()
-        {
-            return Player.Name;
-        }
         public bool AttackOnCoordinate(ITile position)
         {
-            foreach (var tile in Board.Positions)
+            /*foreach (var tile in Board.Positions)
             {
                 if (tile == position)
                 {
@@ -37,6 +33,27 @@ namespace TorpedoClassLibrary
                                 ship.Hit(1, tile);
                                 Player.AddToScore(1);
                                 return true;
+                            }
+                        }
+                    }
+                }
+            }*/
+            foreach(var playerArea in Board.PlayerAreaList)
+            {
+                if(playerArea.Player != Player)
+                {
+                    foreach(var tile in playerArea.PositionList)
+                    {
+                        if(tile == position)
+                        {
+                            foreach(var ship in playerArea.Player.ShipList)
+                            {
+                                if (ship.PositionList.Contains(position))
+                                {
+                                    ship.Hit(1, position);
+                                    Player.AddToScore(1);
+                                    return true;
+                                }
                             }
                         }
                     }

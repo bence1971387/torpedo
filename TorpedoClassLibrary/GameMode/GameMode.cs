@@ -9,7 +9,8 @@ namespace TorpedoClassLibrary
 {
     internal sealed class GameMode : IGameMode
     {
-        public void Asd()
+       // public IList<IBoard> BoardList { get; private set; }
+        public GameMode()
         {
             //Ship ship = new Ship(4, new Vector2(1,1), Ship.Orientation.Down);
             //gamemode interface

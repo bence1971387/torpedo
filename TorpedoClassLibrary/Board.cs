@@ -11,28 +11,37 @@ namespace TorpedoClassLibrary
     public static class Board
     {
         public static bool Initialized { get; private set; } = false;
+        public static bool IsPlayerAreaSet { get; private set; } = false;
         public static int Width { get; private set; }
         public static int Height { get; private set; }
         public static int TileWidth { get; private set; }
         public static int TileHeight { get; private set; }
-       
         public static IList<IPlayer> PlayerList { get; private set; }
-        public static ITile[,] Positions { get; private set; }
-        static Board()
+        public static IList<IPlayerArea> PlayerAreaList { get; private set; }
+        //public static IList<IPlayer> PlayerList { get; private set; }
+        public static ITile[,] Positions { get; set; }
+        public static void SetPlayerAreaList(IList<IPlayerArea> playerAreaList)
         {
-
+            if (!IsPlayerAreaSet)
+            {
+                IsPlayerAreaSet = true;
+                PlayerAreaList = playerAreaList;
+            }
+            else
+            {
+                throw new Exception("Player area is already set!");
+            }
         }
-        public static void CreateBoard(int height, int width, int tileWidth, int tileHeight, IList<IPlayer> players)
+        public static void CreateBoard(int height, int width, int tileWidth, int tileHeight)
         {
             if (!Initialized)
             {
+                Positions = new Tile[width, height];
                 Initialized = true;
                 Height = height;
                 Width = width;
                 TileWidth = tileWidth;
                 TileHeight = tileHeight;
-                Positions = new ITile[width,height];
-                PlayerList = players;
                 for (int i = 0; i < width; i++)
                 {
                     for (int j = 0; j < height; j++)
@@ -45,6 +54,22 @@ namespace TorpedoClassLibrary
             {
                 throw new Exception("Board is already initialized.");
             }
+        }
+        public static void AddPlayer(IPlayer player)
+        {
+            if (PlayerList.Count < 2)
+            {
+                PlayerList.Add(player);
+            } 
+            else
+            {
+                throw new Exception("Cannot add more than 2 players!");
+            }
+        }
+        static Board()
+        {
+            PlayerList = new List<IPlayer>();
+            
         }
     }
 }

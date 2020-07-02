@@ -44,13 +44,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\Actions.cs" />
-    <Compile Include="Control\AI.cs" />
+    <Compile Include="Actions\IActions.cs" />
+    <Compile Include="AI\AI.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Checks.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="GameMode\GameMode.cs" />
     <Compile Include="GameMode\IGameMode.cs" />
-    <Compile Include="Control\IAI.cs" />
+    <Compile Include="AI\IAI.cs" />
+    <Compile Include="PlayerArea\IPlayerArea.cs" />
+    <Compile Include="PlayerArea\PlayerArea.cs" />
     <Compile Include="Player\IPlayer.cs" />
     <Compile Include="Ship\IShip.cs" />
     <Compile Include="Tile\ITile.cs" />

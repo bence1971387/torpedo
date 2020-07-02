@@ -12,13 +12,11 @@ namespace TorpedoClassLibrary
     public sealed class Ship : IShip
     {
         public enum Orientation { Up, Down, Left, Right };
-
         public event EventHandler<int> EventShipHit;
         public event EventHandler EventShipDestroyed;
-
-        public int Length { get; set; }
-        public int Health { get; set; }
-        public IList<ITile> PositionList { get; set; }
+        public int Length { get; private set; }
+        public int Health { get; private set; }
+        public IList<ITile> PositionList { get; private set; }
         public void Hit(int damage, ITile position)
         {
             EventShipHit(this, damage);
@@ -38,39 +36,27 @@ namespace TorpedoClassLibrary
             switch (orientation)
             {
                 case Orientation.Up:
-                    for (int i = (int)position.Y; i >= length; i--)
+                    for (int i = (int)position.Y; i > ((int)position.Y - length); i--)
                     {
-                        PositionList.Add(
-                            new Tile(
-                                new Vector2(position.X, i),
-                                    true));
+                        PositionList.Add(Board.Positions[(int)position.X, i]);
                     }
                     break;
                 case Orientation.Down:
-                    for (int i = (int)position.Y; i < Board.Height + length; i++)
+                    for (int i = (int)position.Y; i < ((int)position.Y + length); i++)
                     {
-                        PositionList.Add(
-                            new Tile(
-                                new Vector2(position.X, i),
-                                    true));
+                        PositionList.Add(Board.Positions[(int)position.X, i]);
                     }
                     break;
                 case Orientation.Left:
-                    for (int i = (int)position.X; i >= 0; i--)
+                    for (int i = (int)position.X; i > ((int)position.X - length); i--)
                     {
-                        PositionList.Add(
-                            new Tile(
-                                new Vector2(i, position.Y),
-                                    true));
+                        PositionList.Add(Board.Positions[i, (int)position.Y]);
                     }
                     break;
                 case Orientation.Right:
-                    for (int i = (int)position.X; i < Board.Width + length; i++)
+                    for (int i = (int)position.X; i < ((int)position.X + length); i++)
                     {
-                        PositionList.Add(
-                            new Tile(
-                                new Vector2(i, position.Y),
-                                    true));
+                        PositionList.Add(Board.Positions[i, (int)position.Y]);
                     }
                     break;
             }

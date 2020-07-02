@@ -76,19 +76,27 @@ namespace TorpedoUI
             InitializeComponent();
             //button.Click += RegisterPlayer;  
             IPlayer p1 = Factory.CreatePlayer("p1",Player.Type.Human);
-            IPlayer p2 = Factory.CreatePlayer("p2",Player.Type.Human);
-            List<IPlayer> playerList = new List<IPlayer>
+            IPlayer p2 = Factory.CreatePlayer("p2",Player.Type.AI);
+            Board.AddPlayer(p1);
+            Board.AddPlayer(p2);
+            Board.CreateBoard(10, 10, 50, 50);
+            Factory.GeneratePlayerAreaList();
+            if(p1.Actions.AttackOnCoordinate(Board.Positions[9, 9]))
             {
-                p1,
-                p2
-            };
-            Board.CreateBoard(10, 10, 50, 50,playerList);
+                text.Text = "success";
+            } 
+            else
+            {
+                text.Text = "Failure";
+            }
             Factory.CreateShip(3, new Vector2(1, 1), Ship.Orientation.Down);
             Rectangle rect = new Rectangle
             {
                 Stroke = Brushes.Black,
                 StrokeThickness = 2
             };
+            //call event on tick in a loop through playerlist and if type = human call mouse actions if type = ai then calculate moves with ai class.
+            //display pass player instance and "displayships" only it's ships. if the other player in board playerlist is an ai then on shift+s keyevent display ai ships (call displayships with ai player instance)
             rect.Width = 100;
             rect.Height = 100;
             GameArea.Children.Add(rect);
@@ -112,7 +120,6 @@ namespace TorpedoUI
             IPlayer p = Factory.CreatePlayer("buuu",Player.Type.Human);
             IPlayer c = Factory.CreatePlayer("baaa",Player.Type.Human);
             p.Actions = c.Actions;
-            text.Text = p.Actions.aaName();
         }
     }
 }

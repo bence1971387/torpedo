@@ -9,11 +9,11 @@ namespace TorpedoClassLibrary
 {
     public sealed class AI : IAI
     {
-        public ITile Attack()
+        public void Attack()
         {
-            Tile tile = new Tile(new Vector2(1, 1), true);
-            Board.PlayerList[0].Actions.AttackOnCoordinate(Board.Positions[1,1]);
-            return tile;
+            //Tile tile = new Tile(new Vector2(1, 1), true);
+            //Board.PlayerList[0].Actions.AttackOnCoordinate(Board.Positions[1,1]);
+            //return tile;
         }
     }
 }

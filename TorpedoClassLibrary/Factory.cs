@@ -10,16 +10,17 @@ namespace TorpedoClassLibrary
 {
     public static class Factory
     {
-        public static IShip CreateShip(int length, ITile tile, Ship.Orientation orientation)
+        public static bool CreateShip(IPlayer player, int length, ITile tile, Ship.Orientation orientation)
         {
-            if (Checks.IsShipPlaceable(length, tile, orientation))
+            if (Checks.IsShipPlaceable(player, length, tile, orientation))
             {
                 IShip ship = new Ship(length, tile, orientation);
-                return ship;
+                player.AddShip(ship);
+                return true;
             }
             else
             {
-                return null;
+                return false;
             }
         }
         private static IActions CreateActions(IPlayer player)

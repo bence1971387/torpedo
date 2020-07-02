@@ -5,6 +5,8 @@ using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace TorpedoClassLibrary
 {
@@ -32,31 +34,43 @@ namespace TorpedoClassLibrary
                 throw new Exception("Player area is already set!");
             }
         }
-        public static void CreateBoard(int height, int width, int tileWidth, int tileHeight)
+        public static void CreateBoard(int width, int height, int tileWidth, int tileHeight, Brush tileOutline, Brush tileFill)
         {
             if (!Initialized)
             {
                 Positions = new Tile[width, height];
                 Initialized = true;
-                Height = height;
                 Width = width;
+                Height = height;
                 TileWidth = tileWidth;
                 TileHeight = tileHeight;
                 for (int i = 0; i < width; i++)
                 {
                     for (int j = 0; j < height; j++)
                     {
-                        Positions[i, j] = new Tile(new Vector2(i, j), true);
+                        Positions[i, j] = new Tile(new Vector2(i, j), 
+                            new Rectangle { 
+                            Stroke = tileOutline,
+                            Fill = tileFill,
+                            StrokeThickness = 2,
+                            Width = tileWidth,
+                            Height = tileHeight
+                        },
+                        true);
                     }
                 }
             } 
             else
             {
-                throw new Exception("Board is already initialized.");
+                throw new Exception("Board is already initialized!");
             }
         }
         public static void AddPlayer(IPlayer player)
         {
+            if (PlayerList.Contains(player))
+            {
+                throw new Exception("You cannot add the same player twice!");
+            }
             if (PlayerList.Count < 2)
             {
                 PlayerList.Add(player);

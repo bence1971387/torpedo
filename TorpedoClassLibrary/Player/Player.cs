@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TorpedoClassLibrary
 {
-    public class Player : IPlayer
+    public sealed class Player : IPlayer
     {
         public enum Type { AI, Human };
         public IActions Actions { get; set; }

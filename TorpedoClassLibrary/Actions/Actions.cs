@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TorpedoClassLibrary
 {
-    public class Actions : IActions
+    public sealed class Actions : IActions
     {
         public IPlayer Player { get; set; }
 

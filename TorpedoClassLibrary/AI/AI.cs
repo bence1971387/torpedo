@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TorpedoClassLibrary
 {
-    public class AI : IAI
+    public sealed class AI : IAI
     {
         public ITile Attack()
         {

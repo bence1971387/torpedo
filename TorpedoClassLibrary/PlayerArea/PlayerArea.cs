@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TorpedoClassLibrary
 {
-    internal class PlayerArea : IPlayerArea
+    internal sealed class PlayerArea : IPlayerArea
     {
         public IPlayer Player { get; private set; }
         public IList<ITile> PositionList { get; private set; }

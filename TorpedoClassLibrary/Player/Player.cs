@@ -9,6 +9,7 @@ namespace TorpedoClassLibrary
 {
     public class Player : IPlayer
     {
+        public event EventHandler<int> ScoreChanged;
         public enum Type { AI, Human };
         public IActions Actions { get; set; }
         public Type PlayerType { get; private set; }
@@ -25,6 +26,7 @@ namespace TorpedoClassLibrary
         public void AddToScore(int score)
         {
             Score += score;
+            ScoreChanged(this, Score);
         }
         void ShipHit(object sender, ITile tile)
         {

@@ -6,6 +6,7 @@ namespace TorpedoClassLibrary
 {
     public interface IPlayer
     {
+        event EventHandler<int> ScoreChanged;
         IActions Actions { get; set; }
         Player.Type PlayerType { get; }
         string Name { get; }

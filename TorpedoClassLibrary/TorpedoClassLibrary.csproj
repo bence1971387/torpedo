@@ -49,6 +49,7 @@
     <Compile Include="AI\AI.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Checks.cs" />
+    <Compile Include="DataBase.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="GameMode\GameMode.cs" />
     <Compile Include="GameMode\IGameMode.cs" />

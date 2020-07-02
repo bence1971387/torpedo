@@ -75,13 +75,18 @@ namespace TorpedoUI
         {
             InitializeComponent();
             //button.Click += RegisterPlayer;  
-            IPlayer p1 = Factory.CreatePlayer("p1",Player.Type.Human);
-            IPlayer p2 = Factory.CreatePlayer("p2",Player.Type.AI);
+            
+            Board.CreateBoard(10, 10, 50, 50);
+            IPlayer p1 = Factory.CreatePlayer("p1", Player.Type.Human);
+            IPlayer p2 = Factory.CreatePlayer("p2", Player.Type.AI);
+            IShip ship = Factory.CreateShip(3, Board.Positions[9, 0], Ship.Orientation.Down);
+            text.Text = ship.PositionList[2].Position.X.ToString();
+            
             Board.AddPlayer(p1);
             Board.AddPlayer(p2);
-            Board.CreateBoard(10, 10, 50, 50);
             Factory.GeneratePlayerAreaList();
-            if(p1.Actions.AttackOnCoordinate(Board.Positions[9, 9]))
+            p1.AddShip(ship);
+            if (p2.Actions.AttackOnCoordinate(Board.Positions[9, 1]))
             {
                 text.Text = "success";
             } 
@@ -89,7 +94,7 @@ namespace TorpedoUI
             {
                 text.Text = "Failure";
             }
-            Factory.CreateShip(3, new Vector2(1, 1), Ship.Orientation.Down);
+            Factory.CreateShip(3, Board.Positions[1,1], Ship.Orientation.Down);
             Rectangle rect = new Rectangle
             {
                 Stroke = Brushes.Black,

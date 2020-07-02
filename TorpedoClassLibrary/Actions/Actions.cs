@@ -18,7 +18,7 @@ namespace TorpedoClassLibrary
         {
             Player = player;
         }
-        public bool AttackOnCoordinate(ITile position)
+        public bool AttackOnCoordinate(ITile attackedTile)
         {
             /*foreach (var tile in Board.Positions)
             {
@@ -44,17 +44,18 @@ namespace TorpedoClassLibrary
                 {
                     foreach(var tile in playerArea.PositionList)
                     {
-                        if(tile == position)
+                        if(tile == attackedTile)
                         {
                             foreach(var ship in playerArea.Player.ShipList)
                             {
-                                if (ship.PositionList.Contains(position))
+                                if (ship.PositionList.Contains(attackedTile))
                                 {
-                                    ship.Hit(1, position);
+                                    ship.Hit(1, attackedTile);
                                     Player.AddToScore(1);
                                     return true;
                                 }
                             }
+                            //return true;
                         }
                     }
                 }

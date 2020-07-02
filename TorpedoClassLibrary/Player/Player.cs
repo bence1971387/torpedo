@@ -15,6 +15,7 @@ namespace TorpedoClassLibrary
         public int Score { get; private set; }
         public string Name { get; private set; }
         public IList<IShip> ShipList { get; private set; }
+        public IList<IShip> ShipDestroyedList { get; private set; }
         public void AddShip(IShip ship)
         {
             ShipList.Add(ship);
@@ -23,7 +24,7 @@ namespace TorpedoClassLibrary
         }
         public void AddToScore(int score)
         {
-            this.Score += score;
+            Score += score;
         }
         void ShipHit(object sender, int damage)
         {
@@ -36,15 +37,17 @@ namespace TorpedoClassLibrary
             ship.EventShipDestroyed -= ShipDestroyed;
             if (ShipList.Contains(ship))
             {
+                ShipDestroyedList.Add(ship);
                 ShipList.Remove(ship);
             }
         }
         internal Player(string name, Type type)
         {
+            ShipList = new List<IShip>();
             PlayerType = type;
             Name = name;
             Score = 0;
-            ShipList = new List<IShip>();
+            
             /*for (int i = 0; i < length; i++)
             {
 

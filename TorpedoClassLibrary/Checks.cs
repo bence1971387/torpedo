@@ -9,16 +9,16 @@ namespace TorpedoClassLibrary
 {
     public static class Checks
     {
-        public static bool IsShipPlaceable(int length, Vector2 position, Ship.Orientation orientation)
+        public static bool IsShipPlaceable(int length, ITile tile, Ship.Orientation orientation)
         {
-            if (Board.Initialized && position.X >= 0 && position.X < Board.Width)
+            if (Board.Initialized && tile.Position.X >= 0 && tile.Position.X < Board.Width)
             {
-                if (position.Y >= 0 && position.Y < Board.Height)
+                if (tile.Position.Y >= 0 && tile.Position.Y < Board.Height)
                 {
                     switch (orientation)
                     {
                         case Ship.Orientation.Up:
-                            if (((int)position.Y - length) >= 0)
+                            if (((int)tile.Position.Y - length) >= 0)
                             {
                                 return true;
                             }
@@ -27,7 +27,7 @@ namespace TorpedoClassLibrary
                                 return false;
                             }
                         case Ship.Orientation.Down:
-                            if (((int)position.Y + length) < Board.Height)
+                            if (((int)tile.Position.Y + length) < Board.Height)
                             {
                                 return true;
                             }
@@ -36,7 +36,7 @@ namespace TorpedoClassLibrary
                                 return false;
                             }
                         case Ship.Orientation.Left:
-                            if (((int)position.X - length) >= 0)
+                            if (((int)tile.Position.X - length) >= 0)
                             {
                                 return true;
                             }
@@ -45,7 +45,7 @@ namespace TorpedoClassLibrary
                                 return false;
                             }
                         case Ship.Orientation.Right:
-                            if (((int)position.X + length) < Board.Width)
+                            if (((int)tile.Position.X + length) < Board.Width)
                             {
                                 return true;
                             }

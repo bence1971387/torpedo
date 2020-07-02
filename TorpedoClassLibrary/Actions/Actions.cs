@@ -22,57 +22,41 @@ namespace TorpedoClassLibrary
         }
         public bool AttackOnCoordinate(ITile attackedTile)
         {
-            /*foreach (var tile in Board.Positions)
-            {
-                if (tile == position)
+            if(!Checks.IsTilePlayersRegion(Player, attackedTile)){
+                Rectangle displayAttack = new Rectangle
                 {
-                    foreach (var player in Board.PlayerList)
+                    Stroke = Brushes.Black,
+                    Fill = Brushes.LightBlue,
+                    StrokeThickness = 2,
+                    Width = Board.TileWidth,
+                    Height = Board.TileHeight
+                };
+                attackedTile.Display = displayAttack;
+                foreach (var playerArea in Board.PlayerAreaList)
+                {
+                    if (playerArea.Player != Player)
                     {
-                        foreach (var ship in player.ShipList)
+                        foreach (var tile in playerArea.PositionList)
                         {
-                            if (ship.PositionList.Contains(tile))
+                            if (tile == attackedTile)
                             {
-                                ship.Hit(1, tile);
-                                Player.AddToScore(1);
+                                foreach (var ship in playerArea.Player.ShipList)
+                                {
+                                    if (ship.PositionList.Contains(attackedTile))
+                                    {
+                                        ship.Hit(1, attackedTile);
+                                        Player.AddToScore(1);
+                                        return true;
+                                    }
+                                }
                                 return true;
                             }
                         }
                     }
                 }
-            }*/
-            Rectangle displayAttack = new Rectangle
-            {
-                Stroke = Brushes.Black,
-                Fill = Brushes.LightBlue,
-                StrokeThickness = 2,
-                Width = Board.TileWidth,
-                Height = Board.TileHeight
-            };
-            attackedTile.Display = displayAttack;
-            foreach (var playerArea in Board.PlayerAreaList)
-            {
-                if(playerArea.Player != Player)
-                {
-                    foreach(var tile in playerArea.PositionList)
-                    {
-                        if(tile == attackedTile)
-                        {
-                            foreach(var ship in playerArea.Player.ShipList)
-                            {
-                                if (ship.PositionList.Contains(attackedTile))
-                                {
-                                    ship.Hit(1, attackedTile);
-                                    Player.AddToScore(1);
-                                    return true;
-                                }
-                            }
-                            return true;
-                        }
-                    }
-                }
+                return false;
             }
             return false;
         }
-
     }
 }

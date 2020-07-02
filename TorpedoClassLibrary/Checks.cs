@@ -9,7 +9,7 @@ namespace TorpedoClassLibrary
 {
     public static class Checks
     {
-        private static bool IsTilePlayersRegion(IPlayer player, ITile tile)
+        public static bool IsTilePlayersRegion(IPlayer player, ITile tile)
         {
             if ((int)tile.Position.X >= 0 && (int)tile.Position.X < Board.Width)
             {

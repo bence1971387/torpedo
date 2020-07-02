@@ -26,9 +26,9 @@ namespace TorpedoClassLibrary
         {
             Score += score;
         }
-        void ShipHit(object sender, int damage)
+        void ShipHit(object sender, ITile tile)
         {
-            AddToScore(damage);
+            AddToScore(1);
         }
         void ShipDestroyed(object sender, EventArgs e)
         {

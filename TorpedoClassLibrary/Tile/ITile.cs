@@ -5,7 +5,7 @@ namespace TorpedoClassLibrary
 {
     public interface ITile
     {
-        Rectangle Display { get; }
+        Rectangle Display { get; set; }
         bool IsActive { get; set; }
         Vector2 Position { get; }
         double Width { get; }

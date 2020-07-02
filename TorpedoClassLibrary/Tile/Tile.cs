@@ -11,7 +11,7 @@ namespace TorpedoClassLibrary
 {
     public sealed class Tile : ITile
     {
-        public Rectangle Display { get; private set; }
+        public Rectangle Display { get; set; }
         public Vector2 Position { get; private set; }
         public bool IsActive { get; set; } = true;
         public double Width { get; private set; }

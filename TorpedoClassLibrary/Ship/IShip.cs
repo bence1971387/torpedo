@@ -5,7 +5,7 @@ namespace TorpedoClassLibrary
 {
     public interface IShip
     {
-        event EventHandler<int> EventShipHit;
+        event EventHandler<ITile> EventShipHit;
         event EventHandler EventShipDestroyed;
         int Health { get; }
         int Length { get; }

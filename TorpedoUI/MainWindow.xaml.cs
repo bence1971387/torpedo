@@ -34,31 +34,48 @@ namespace TorpedoUI
                 }
             }
         }
-        public void DisplayShips(IPlayer player)
+        /*public void DisplayShips(IPlayer player)
         {
             foreach (var ship in player.ShipList)
             {
                 foreach (var tile in ship.PositionList)
                 {
-                    Rectangle position = new Rectangle
-                    {
-                        Stroke = Brushes.Black,
-                        Fill = Brushes.Green,
-                        StrokeThickness = 2,
-                        Width = Board.TileWidth,
-                        Height = Board.TileHeight
-                    };
-                    Canvas.SetLeft(position, tile.Position.X * Board.TileWidth);
-                    Canvas.SetTop(position, tile.Position.Y * Board.TileHeight);
-                    GameArea.Children.Add(position);
+                    Canvas.SetLeft(tile.Display, tile.Position.X * Board.TileWidth);
+                    Canvas.SetTop(tile.Display, tile.Position.Y * Board.TileHeight);
+                    GameArea.Children.Add(tile.Display);
                 }
             }
-        }
+        }*/
+        /*public void DisplayAttack(object sender, ITile tile)
+        {
+            
+            Canvas.SetLeft(display, tile.Position.X*Board.TileWidth);
+            Canvas.SetTop(display, tile.Position.Y*Board.TileHeight);
+            GameArea.Children.Add(display);
+        }*/
+        /*public void InitializeShips()
+        {
+            foreach (var playerArea in Board.PlayerAreaList)
+            {
+                foreach (var ship in playerArea.Player.ShipList)
+                {
+                    ship.EventShipHit += DisplayAttack;
+                }
+            }
+        }*/
         public MainWindow()
         {
             InitializeComponent();
             Board.CreateBoard(20, 10, 50, 50, Brushes.Black, Brushes.White);
-            DisplayBoard();
+            Rectangle displayDamage = new Rectangle
+            {
+                Stroke = Brushes.Black,
+                Fill = Brushes.Red,
+                StrokeThickness = 2,
+                Width = Board.TileWidth,
+                Height = Board.TileHeight
+            };
+            Board.Positions[1, 1].Display = displayDamage;
             IPlayer player = Factory.CreatePlayer("PlayerOne", Player.Type.Human);
             IPlayer player2 = Factory.CreatePlayer("PlayerTwo", Player.Type.AI);
             Board.AddPlayer(player);
@@ -69,7 +86,14 @@ namespace TorpedoUI
             {
                 
             }
-            DisplayShips(player);
+            player2.Actions.AttackOnCoordinate(Board.Positions[5, 3]);
+            DisplayBoard();
+            //InitializeShips();
+
+
+
+
+            //DisplayBoard();
             /*Board.CreateBoard(10, 10, 50, 50);
             IPlayer p1 = Factory.CreatePlayer("p1", Player.Type.Human);
             IPlayer p2 = Factory.CreatePlayer("p2", Player.Type.AI);

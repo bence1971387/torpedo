@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Numerics;
 using TorpedoClassLibrary;
 using System.ComponentModel;
+using System.Threading;
 
 namespace TorpedoUI 
 {
@@ -24,6 +25,9 @@ namespace TorpedoUI
         enum GameModes { PvP, PvAI };
         private GameStates _gameState;
         private GameModes _gameMode;
+        private IPlayer _currentPlayer;
+        private IAI ai;
+        private Random _rand;
         private IEnumerable<IPlayer> CurrentPlayer()
         {
             while (true)
@@ -33,6 +37,32 @@ namespace TorpedoUI
                     yield return player;
                 }
             }
+        }
+        public void PlaceShips()
+        {
+            _rand = new Random();
+            foreach (var playerArea in Board.PlayerAreaList)
+            {
+                for(int i = 1; i <= 5; i++)
+                {
+                    int random;
+                    do
+                    {
+                        random = _rand.Next(0, playerArea.PositionList.Count() - 1);
+                    } while (!Factory.CreateShip(playerArea.Player, i, playerArea.PositionList[random], Ship.Orientation.Down));
+                }
+            }
+        }
+        public IPlayer PlayerWon()
+        {
+            foreach (var player in Board.PlayerList)
+            {
+                if(player.ShipList.Count == player.ShipDestroyedList.Count && player.ShipDestroyedList.Count > 0)
+                {
+                    return Board.PlayerList.First(x => x != player);
+                }
+            }
+            return null;
         }
         public void PlayerVersusPlayer(object sender, EventArgs e)
         {
@@ -46,13 +76,22 @@ namespace TorpedoUI
             _gameMode = GameModes.PvAI;
             Game();
         }
-        public void PlayPvE()
+        public void PlayPvE(object sender, EventArgs e)
         {
-
+            _gameState = GameStates.Game;
+            //while (PlayerWon() == null)
+            //{
+                Game();
+            //}
         }
-        public void PlayPvP()
+        public void PlayPvP(object sender, EventArgs e)
         {
-
+            _gameState = GameStates.Game;
+            
+            //while (PlayerWon() == null)
+            //{
+                Game();
+            //}
         }
         public void DisplayBoard(IPlayer player)
         {
@@ -134,6 +173,12 @@ namespace TorpedoUI
                             Canvas.SetTop(playerTwoName, 90);
                             Canvas.SetLeft(playerTwoName, ((Board.Width * Board.TileWidth) / 2) - 50);
                             GameArea.Children.Add(playerTwoName);
+                            IPlayer playerOne = Factory.CreatePlayer(playerOneName.Text, Player.Type.Human);
+                            IPlayer playerTwo = Factory.CreatePlayer(playerTwoName.Text, Player.Type.Human);
+                            Board.AddPlayer(playerOne);
+                            Board.AddPlayer(playerTwo);
+                            Factory.GeneratePlayerAreaList();
+                            PlaceShips();
                             Button StartPvP = new Button
                             {
                                 Width = 100,
@@ -143,6 +188,7 @@ namespace TorpedoUI
                             Canvas.SetTop(StartPvP, 110);
                             Canvas.SetLeft(StartPvP, ((Board.Width * Board.TileWidth) / 2) - 50);
                             GameArea.Children.Add(StartPvP);
+                            StartPvP.Click += PlayPvP;
                             break;
                         case GameModes.PvAI:
                             TextBox playerName = new TextBox
@@ -162,20 +208,35 @@ namespace TorpedoUI
                             Canvas.SetTop(StartPvE, 110);
                             Canvas.SetLeft(StartPvE, ((Board.Width * Board.TileWidth) / 2) - 50);
                             GameArea.Children.Add(StartPvE);
+                            StartPvE.Click += PlayPvE;
+                            IPlayer player = Factory.CreatePlayer(playerName.Text, Player.Type.Human);
+                            IPlayer bot = Factory.CreatePlayer("Bot", Player.Type.AI);
+                            Board.AddPlayer(player);
+                            Board.AddPlayer(bot);
+                            Factory.GeneratePlayerAreaList();
+                            ai = new AI(bot);
+                            PlaceShips();
                             break;
                     }
                     break;
                 case GameStates.Game:
-
-                    
+                    GameArea.Children.Clear();
+                    if (_currentPlayer == null)
+                    {
+                        _currentPlayer = Board.PlayerList[0];
+                    }
+                    DisplayBoard(_currentPlayer);
                     break;
             }
         }
         public MainWindow()
         {
             InitializeComponent();
+
             _gameState = GameStates.Init;
             Board.CreateBoard(20, 10, 50, 50, Brushes.Black, Brushes.White);
+            GameArea.Width = Board.Width * Board.TileWidth;
+            GameArea.Height = Board.Height * Board.TileHeight + 27;
             Game();
             /*DataBase.AddPlayer("asd");
             IPlayer player = Factory.CreatePlayer("PlayerOne", Player.Type.Human);
@@ -190,12 +251,17 @@ namespace TorpedoUI
             {
                 
             }
+            DisplayBoard(player);
             IAI ai = new AI(player2);
-            ai.Attack();
+            for(int i = 0; i < 50; i++)
+            {
+                DisplayBoard(player2);
+                //Thread.Sleep(600);
+                ai.Attack();
+            }
             //DisplayBoard();
             //player2.Actions.AttackOnCoordinate(Board.Positions[5, 4]);
-            //player2.Actions.AttackOnCoordinate(Board.Positions[6, 3]);
-            DisplayBoard(player);*/
+            //player2.Actions.AttackOnCoordinate(Board.Positions[6, 3]);*/
         }
 
         private void GameArea_MouseDown(object sender, MouseButtonEventArgs e)
@@ -203,15 +269,54 @@ namespace TorpedoUI
             Point point = e.GetPosition(GameArea);
             int xNormalized = (int)((point.X / Board.TileWidth));
             int yNormalized = (int)((point.Y / Board.TileHeight));
-            //CurrentPlayer().
-            Board.PlayerList[1].Actions.AttackOnCoordinate(Board.Positions[xNormalized,yNormalized]);
-            DisplayBoard(Board.PlayerList[1]);
+            
+            switch (_gameMode)
+            {
+                case GameModes.PvP:
+                    if (_currentPlayer.Actions.AttackOnCoordinate(Board.Positions[xNormalized, yNormalized]))
+                    {
+                        if (_currentPlayer == Board.PlayerList[0])
+                        {
+                            _currentPlayer = Board.PlayerList[1];
+                        }
+                        else
+                        {
+                            _currentPlayer = Board.PlayerList[0];
+                        }
+                    }
+                    PlayPvP(sender, e);
+                    break;
+                case GameModes.PvAI:
+                    if (_currentPlayer == Board.PlayerList[0])
+                    {
+                        _currentPlayer.Actions.AttackOnCoordinate(Board.Positions[xNormalized, yNormalized]);
+                        _currentPlayer = Board.PlayerList[1];
+                    }
+                    else
+                    {
+                        ai.Attack();
+                        _currentPlayer = Board.PlayerList[0];
+                    }
+                    
+                    PlayPvE(sender, e);
+                    break;
+            }
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if(Keyboard.IsKeyDown(Key.S) && Keyboard.IsKeyDown(Key.LeftCtrl))
             {
+                if (Board.PlayerList[1].PlayerType == Player.Type.AI)
+                {
+                    foreach(var ship in Board.PlayerList[1].ShipList)
+                    {
+                        foreach (var tile in ship.PositionList)
+                        {
+                            tile.Hide();
+                        }
+                    }
+                }
                 Board.PlayerList[1].Actions.AttackOnCoordinate(Board.Positions[1, 3]);
                 DisplayBoard(Board.PlayerList[0]);
             }

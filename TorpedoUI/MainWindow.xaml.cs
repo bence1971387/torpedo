@@ -79,18 +79,45 @@ namespace TorpedoUI
         public void PlayPvE(object sender, EventArgs e)
         {
             _gameState = GameStates.Game;
-            //while (PlayerWon() == null)
-            //{
+            IPlayer won;
+            if((won = PlayerWon()) == null)
+            {
                 Game();
+            }
+            else
+            {
+                TextBlock playerWon = new TextBlock
+                {
+                    Text = won.Name,
+                    Width = 100
+                };
+                Canvas.SetTop(playerWon, 90);
+                Canvas.SetLeft(playerWon, ((Board.Width * Board.TileWidth) / 2) - 50);
+                GameArea.Children.Add(playerWon);
+            }
+            //{
             //}
         }
         public void PlayPvP(object sender, EventArgs e)
         {
             _gameState = GameStates.Game;
-            
-            //while (PlayerWon() == null)
-            //{
+
+            IPlayer won;
+            if ((won = PlayerWon()) == null)
+            {
                 Game();
+            }
+            else
+            {
+                TextBlock playerWon = new TextBlock
+                {
+                    Text = won.Name,
+                    Width = 100
+                };
+                Canvas.SetTop(playerWon, 90);
+                Canvas.SetLeft(playerWon, ((Board.Width * Board.TileWidth) / 2) - 50);
+                GameArea.Children.Add(playerWon);
+            }
             //}
         }
         public void DisplayBoard(IPlayer player)

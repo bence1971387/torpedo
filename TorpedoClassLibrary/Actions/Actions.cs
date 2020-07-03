@@ -32,26 +32,22 @@ namespace TorpedoClassLibrary
                         {
                             if (tile == attackedTile)
                             {
-                                foreach (var ship in playerArea.Player.ShipList)
+                                if (playerArea.Player.ShipList.Any(x => x.PositionList.Contains(attackedTile)))
                                 {
-                                    if (ship.PositionList.Contains(attackedTile))
+                                    IShip ship = playerArea.Player.ShipList.First(x => x.PositionList.Contains(attackedTile));
+                                    if (ship.Hit(1, attackedTile))
                                     {
-                                        if (ship.Hit(1, attackedTile))
-                                        {
-                                            //attackedTile.SetDisplay(Tile.DisplayType.Damage);
-                                            Player.AddToScore(1);
-                                            return true;
-                                        }
-                                        else
-                                        {
-                                            //attackedTile.SetDisplay(Tile.DisplayType.Attack);
-                                            return false;
-                                        }
+                                        Player.AddToScore(1);
+                                        return true;
                                     }
                                     else
                                     {
-                                        attackedTile.SetDisplay(Tile.DisplayType.Attack);
-                                    }                                    
+                                        return false;
+                                    }
+                                }
+                                else
+                                {
+                                    attackedTile.SetDisplay(Tile.DisplayType.Attack);
                                 }
                                 return true;
                             }

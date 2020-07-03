@@ -26,7 +26,7 @@ namespace TorpedoClassLibrary
         public void AddToScore(int score)
         {
             Score += score;
-            ScoreChanged(this, Score);
+            //ScoreChanged(this, Score);
         }
         void ShipHit(object sender, ITile tile)
         {
@@ -39,6 +39,10 @@ namespace TorpedoClassLibrary
             ship.EventShipDestroyed -= ShipDestroyed;
             if (ShipList.Contains(ship))
             {
+                foreach(var tile in ship.PositionList)
+                {
+                    tile.SetDisplay(Tile.DisplayType.Tile);
+                }
                 ShipDestroyedList.Add(ship);
                 ShipList.Remove(ship);
             }
@@ -46,6 +50,7 @@ namespace TorpedoClassLibrary
         internal Player(string name, Type type)
         {
             ShipList = new List<IShip>();
+            ShipDestroyedList = new List<IShip>();
             PlayerType = type;
             Name = name;
             Score = 0;

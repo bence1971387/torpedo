@@ -20,37 +20,22 @@ namespace TorpedoClassLibrary
         public int Health { get; private set; }
         public IList<ITile> PositionList { get; private set; }
         public IList<ITile> DamagedPositionList { get; private set; }
-        public void Hit(int damage, ITile tile)
+        public bool Hit(int damage, ITile tile)
         {
-            Rectangle displayDamage = new Rectangle
+            if (!DamagedPositionList.Contains(tile))
             {
-                Stroke = Brushes.Black,
-                Fill = Brushes.Red,
-                StrokeThickness = 2,
-                Width = Board.TileWidth,
-                Height = Board.TileHeight
-            };
-            tile.Display = displayDamage;
-            EventShipHit(this, tile);
-            Health -= damage;
-            //PositionList.Remove(tile);
-            DamagedPositionList.Add(tile);
-            if (Health <= 0)
-            {
-                EventShipDestroyed(this, EventArgs.Empty);
-            }
-        }
-        private Rectangle DisplayShip()
-        {
-            Rectangle displayShip = new Rectangle
-            {
-                Stroke = Brushes.Black,
-                Fill = Brushes.Green,
-                StrokeThickness = 2,
-                Width = Board.TileWidth,
-                Height = Board.TileHeight
-            };
-            return displayShip;
+                tile.SetDisplay(Tile.DisplayType.Damage);
+                EventShipHit(this, tile);
+                Health -= damage;
+                //PositionList.Remove(tile);
+                DamagedPositionList.Add(tile);
+                if (Health <= 0)
+                {
+                    EventShipDestroyed(this, EventArgs.Empty);
+                }
+                return true;
+            }            
+            return false;
         }
         internal Ship(int length, ITile tile, Orientation orientation)
         {
@@ -64,29 +49,29 @@ namespace TorpedoClassLibrary
                 case Orientation.Up:
                     for (int i = (int)tile.Position.Y; i > ((int)tile.Position.Y - length); i--)
                     {
-                        
-                        Board.Positions[(int)tile.Position.X, i].Display = DisplayShip();
+
+                        Board.Positions[(int)tile.Position.X, i].SetDisplay(Tile.DisplayType.Ship);
                         PositionList.Add(Board.Positions[(int)tile.Position.X, i]);
                     }
                     break;
                 case Orientation.Down:
                     for (int i = (int)tile.Position.Y; i < ((int)tile.Position.Y + length); i++)
                     {
-                        Board.Positions[(int)tile.Position.X, i].Display = DisplayShip();
+                        Board.Positions[(int)tile.Position.X, i].SetDisplay(Tile.DisplayType.Ship);
                         PositionList.Add(Board.Positions[(int)tile.Position.X, i]);
                     }
                     break;
                 case Orientation.Left:
                     for (int i = (int)tile.Position.X; i > ((int)tile.Position.X - length); i--)
                     {
-                        Board.Positions[i, (int)tile.Position.Y].Display = DisplayShip();
+                        Board.Positions[i, (int)tile.Position.Y].SetDisplay(Tile.DisplayType.Ship);
                         PositionList.Add(Board.Positions[i, (int)tile.Position.Y]);
                     }
                     break;
                 case Orientation.Right:
                     for (int i = (int)tile.Position.X; i < ((int)tile.Position.X + length); i++)
                     {
-                        Board.Positions[i, (int)tile.Position.Y].Display = DisplayShip();
+                        Board.Positions[i, (int)tile.Position.Y].SetDisplay(Tile.DisplayType.Ship);
                         PositionList.Add(Board.Positions[i, (int)tile.Position.Y]);
                     }
                     break;

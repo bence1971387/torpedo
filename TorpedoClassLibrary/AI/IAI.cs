@@ -8,5 +8,6 @@ namespace TorpedoClassLibrary
 {
     public interface IAI
     {
+        void Attack();
     }
 }

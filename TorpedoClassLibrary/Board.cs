@@ -48,15 +48,7 @@ namespace TorpedoClassLibrary
                 {
                     for (int j = 0; j < height; j++)
                     {
-                        Positions[i, j] = new Tile(new Vector2(i, j), 
-                            new Rectangle { 
-                            Stroke = tileOutline,
-                            Fill = tileFill,
-                            StrokeThickness = 2,
-                            Width = tileWidth,
-                            Height = tileHeight
-                        },
-                        true);
+                        Positions[i, j] = new Tile(new Vector2(i, j), true);
                     }
                 }
             } 

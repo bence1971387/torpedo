@@ -11,6 +11,6 @@ namespace TorpedoClassLibrary
         int Length { get; }
         IList<ITile> PositionList { get; }
         IList<ITile> DamagedPositionList { get; }
-        void Hit(int damage, ITile tile);
+        bool Hit(int damage, ITile tile);
     }
 }

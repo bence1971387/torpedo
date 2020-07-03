@@ -25,6 +25,15 @@ namespace TorpedoUI
             GameArea.Width = Board.Width * Board.TileWidth;
             GameArea.Height = Board.Height * Board.TileHeight;
             GameArea.Children.Clear();
+            Line line = new Line {
+                Stroke = Brushes.Brown,
+                StrokeThickness = 4,
+                X1 = (Board.Width * Board.TileWidth) / 2,
+                Y1 = 0,
+                X2 = (Board.Width * Board.TileWidth) / 2,
+                Y2 = Board.Height * Board.TileHeight
+            };
+            
             for(int i = 0; i < Board.Width; i++)
             {
                 for (int j = 0; j < Board.Height; j++)
@@ -34,10 +43,12 @@ namespace TorpedoUI
                     GameArea.Children.Add(Board.Positions[i, j].Display);
                 }
             }
+            GameArea.Children.Add(line);
         }
         public MainWindow()
         {
             InitializeComponent();
+            
             Board.CreateBoard(20, 10, 50, 50, Brushes.Black, Brushes.White);
             IPlayer player = Factory.CreatePlayer("PlayerOne", Player.Type.Human);
             IPlayer player2 = Factory.CreatePlayer("PlayerTwo", Player.Type.AI);
@@ -45,10 +56,14 @@ namespace TorpedoUI
             Board.AddPlayer(player2);
             Factory.GeneratePlayerAreaList();
             Factory.CreateShip(player, 6, Board.Positions[0, 0], Ship.Orientation.Down);
-            if(Factory.CreateShip(player, 5, Board.Positions[5, 3], Ship.Orientation.Right))
+            Factory.CreateShip(player2, 6, Board.Positions[10, 0], Ship.Orientation.Down);
+            Factory.CreateShip(player2, 6, Board.Positions[15, 4], Ship.Orientation.Down);
+            if (Factory.CreateShip(player, 5, Board.Positions[5, 3], Ship.Orientation.Right))
             {
                 
             }
+            IAI ai = new AI(player2);
+            ai.Attack();
             //DisplayBoard();
             //player2.Actions.AttackOnCoordinate(Board.Positions[5, 4]);
             //player2.Actions.AttackOnCoordinate(Board.Positions[6, 3]);
@@ -61,7 +76,7 @@ namespace TorpedoUI
             int xNormalized = (int)((point.X / Board.TileWidth));
             int yNormalized = (int)((point.Y / Board.TileHeight));
             Board.PlayerList[1].Actions.AttackOnCoordinate(Board.Positions[xNormalized,yNormalized]);
-            DisplayBoard(Board.PlayerList[0]);
+            DisplayBoard(Board.PlayerList[1]);
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

@@ -23,15 +23,7 @@ namespace TorpedoClassLibrary
         public bool AttackOnCoordinate(ITile attackedTile)
         {
             if(!Checks.IsTilePlayersRegion(Player, attackedTile)){
-                Rectangle displayAttack = new Rectangle
-                {
-                    Stroke = Brushes.Black,
-                    Fill = Brushes.LightBlue,
-                    StrokeThickness = 2,
-                    Width = Board.TileWidth,
-                    Height = Board.TileHeight
-                };
-                attackedTile.Display = displayAttack;
+                //attackedTile.SetDisplay(Tile.DisplayType.Attack); 
                 foreach (var playerArea in Board.PlayerAreaList)
                 {
                     if (playerArea.Player != Player)
@@ -44,13 +36,26 @@ namespace TorpedoClassLibrary
                                 {
                                     if (ship.PositionList.Contains(attackedTile))
                                     {
-                                        ship.Hit(1, attackedTile);
-                                        Player.AddToScore(1);
-                                        return true;
+                                        if (ship.Hit(1, attackedTile))
+                                        {
+                                            //attackedTile.SetDisplay(Tile.DisplayType.Damage);
+                                            Player.AddToScore(1);
+                                            return true;
+                                        }
+                                        else
+                                        {
+                                            //attackedTile.SetDisplay(Tile.DisplayType.Attack);
+                                            return false;
+                                        }
                                     }
+                                    else
+                                    {
+                                        attackedTile.SetDisplay(Tile.DisplayType.Attack);
+                                    }                                    
                                 }
                                 return true;
                             }
+                            
                         }
                     }
                 }
